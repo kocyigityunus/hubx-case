@@ -20,6 +20,9 @@ module.exports = api => {
   };
   plugins.push(['module-resolver', moduleResolverOptions]);
 
+  //
+  plugins.push(['react-native-unistyles/plugin', { root: './' }]);
+
   // remove console.log in production
   // api.env() == 'development' || 'production'
   if (api.env() === 'production') {

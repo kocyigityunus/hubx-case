@@ -5,6 +5,9 @@ export const fonts = {
   Rubik700Bold: 'Rubik-Bold',
   Rubik800ExtraBold: 'Rubik-ExtraBold',
   Rubik900Black: 'Rubik-Black',
+
+  //
+  SFProText: 'SF Pro Text',
 };
 
 export const colors = {
