@@ -1,4 +1,4 @@
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Text, View, Pressable, StyleSheet } from 'react-native';
 import { Logger } from '@utils/logger';
 import { fonts, colors } from '@styles';
@@ -8,11 +8,12 @@ import FastImage from '@d11/react-native-fast-image';
 import { RootStackParamList, ScreenNames } from '@screens/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+//
+type ScreenName = typeof ScreenNames.Onboarding.GetStarted;
+type NavType = NativeStackNavigationProp<RootStackParamList, ScreenName>;
+
 export const GetStartedScreen = () => {
-  const navigation =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList, 'Onboarding.GetStarted'>
-    >();
+  const navigation = useNavigation<NavType>();
   const insets = useSafeAreaInsets();
   Logger.get('GetStartedScreen').info({ insets });
 
@@ -42,8 +43,7 @@ export const GetStartedScreen = () => {
             marginLeft: 24,
           }}
         >
-          Welcome to{' '}
-          <Text style={{ fontFamily: fonts.Rubik600SemiBold }}>PlantApp</Text>
+          Welcome to <Text style={{ fontFamily: fonts.Rubik600SemiBold }}>PlantApp</Text>
         </Text>
 
         <Text
@@ -117,7 +117,7 @@ export const GetStartedScreen = () => {
           <Text
             style={styles.bottomInfoTextLink}
             onPress={async () => {
-              navigation.navigate('Other.WebView', {
+              navigation.navigate(ScreenNames.Other.WebView, {
                 url: 'https://novaapp.ai/terms',
               });
             }}
@@ -128,7 +128,7 @@ export const GetStartedScreen = () => {
           <Text
             style={styles.bottomInfoTextLink}
             onPress={() =>
-              navigation.navigate('Other.WebView', {
+              navigation.navigate(ScreenNames.Other.WebView, {
                 url: 'https://novaapp.ai/privacy',
               })
             }
