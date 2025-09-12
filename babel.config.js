@@ -13,6 +13,7 @@ module.exports = api => {
     alias: {
       '@': './js',
       '@utils': './js/utils',
+      '@styles': './js/styles',
       '@screens': './js/screens',
     },
   };
