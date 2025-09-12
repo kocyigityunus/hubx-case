@@ -26,6 +26,7 @@ import {
 } from '@reduxjs/toolkit';
 import { Provider, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Navigation } from './js/screens/navigation';
 
 //
 
@@ -77,7 +78,8 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <Text style={{ paddingTop: 30 }}>
+      <Navigation />
+      {/* <Text style={{ paddingTop: 30 }}>
         {JSON.stringify(store.getState(), null, 2)}
       </Text>
       <Button
@@ -90,7 +92,7 @@ function AppContent() {
       <NewAppScreen
         templateFileName="App.tsx"
         safeAreaInsets={safeAreaInsets}
-      />
+      /> */}
     </View>
   );
 }
