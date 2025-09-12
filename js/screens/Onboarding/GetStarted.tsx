@@ -9,6 +9,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native-unistyles';
 import { useCallback } from 'react';
 import { OnboardingGradient } from '@components/other/OnboardingGradient';
+import { PrimaryButton } from '@/components/base/PrimaryButton';
 
 //
 type ScreenName = typeof ScreenNames.Onboarding.GetStarted;
@@ -61,15 +62,14 @@ export const GetStartedScreen = () => {
         />
 
         {/* Get Started Button */}
-        <Pressable
-          style={styles.getStartedButton}
+        <PrimaryButton
+          style={{ marginHorizontal: 24, marginTop: 12 }}
+          title="Get Started"
           onPress={() => {
             Logger.get('GetStartedScreen').info('Going to OnboardingCarousel');
             navigation.navigate(ScreenNames.Onboarding.OnboardingCarousel);
           }}
-        >
-          <Text style={styles.getStartedButtonText}>Get Started</Text>
-        </Pressable>
+        />
 
         {/* Bottom Info Text */}
         <Text style={styles.bottomInfoText}>
@@ -107,24 +107,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.07,
     color: colors.dark900,
     opacity: 0.7,
-  },
-  getStartedButton: {
-    backgroundColor: colors.green400,
-    borderRadius: 12,
-    height: 56,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 24,
-    marginTop: 12,
-  },
-  getStartedButtonText: {
-    color: colors.white,
-    fontFamily: fonts.SFProText,
-    fontWeight: 'bold',
-    fontSize: 15,
-    lineHeight: 24,
-    letterSpacing: -0.24,
-    textAlign: 'center',
   },
   bottomInfoText: {
     textAlign: 'center',
