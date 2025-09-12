@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Text, View, Button } from 'react-native';
-import { Logger } from '../utils/logger';
+import { Logger } from '@utils/logger';
 
 export const AScreen = () => {
   const navigation = useNavigation();
