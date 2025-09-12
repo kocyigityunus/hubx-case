@@ -112,18 +112,25 @@ export const AScreen = () => {
           <Text
             style={styles.bottomInfoTextLink}
             onPress={async () => {
-              const url = 'https://plantid.com/terms-of-use';
-              const supported = await Linking.canOpenURL(url);
-              Logger.get('AScreen').info({ supported });
-
-              if (supported) {
-                await Linking.openURL(url);
-              }
+              navigation.navigate('Other.WebView', {
+                url: 'https://novaapp.ai/terms',
+              });
             }}
           >
             Terms of Use
           </Text>{' '}
-          & <Text style={styles.bottomInfoTextLink}>Privacy Policy</Text>.
+          &{' '}
+          <Text
+            style={styles.bottomInfoTextLink}
+            onPress={() =>
+              navigation.navigate('Other.WebView', {
+                url: 'https://novaapp.ai/privacy',
+              })
+            }
+          >
+            Privacy Policy
+          </Text>
+          .
         </Text>
       </View>
     </LinearGradient>
