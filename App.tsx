@@ -6,27 +6,12 @@
  */
 
 import { NewAppScreen } from '@react-native/new-app-screen';
-import {
-  Button,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-import {
-  configureStore,
-  createAction,
-  createReducer,
-  createSlice,
-} from '@reduxjs/toolkit';
+import { Button, StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { configureStore, createAction, createReducer, createSlice } from '@reduxjs/toolkit';
 import { Provider, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Navigation } from './js/screens/navigation';
+import { Navigation } from './js/navigation';
 
 //
 

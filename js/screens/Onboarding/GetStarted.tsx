@@ -3,12 +3,12 @@ import { Text, View, Pressable } from 'react-native';
 import { Logger } from '@utils/logger';
 import { fonts, colors } from '@styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
 import FastImage from '@d11/react-native-fast-image';
-import { RootStackParamList, ScreenNames } from '@screens/navigation';
+import { RootStackParamList, ScreenNames } from '@/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native-unistyles';
 import { useCallback } from 'react';
+import { OnboardingGradient } from '@components/other/OnboardingGradient';
 
 //
 type ScreenName = typeof ScreenNames.Onboarding.GetStarted;
@@ -21,26 +21,20 @@ export const GetStartedScreen = () => {
 
   //
   const openTermsOfUse = useCallback(() => {
-    navigation.navigate(ScreenNames.Other.WebView, {
+    navigation.push(ScreenNames.Other.WebView, {
       url: 'https://novaapp.ai/terms',
     });
   }, [navigation]);
 
   //
   const openPrivacyPolicy = useCallback(() => {
-    navigation.navigate(ScreenNames.Other.WebView, {
+    navigation.push(ScreenNames.Other.WebView, {
       url: 'https://novaapp.ai/privacy',
     });
   }, [navigation]);
 
   return (
-    <LinearGradient
-      colors={['#F8FAFD', '#EDF7FE']}
-      useAngle={true}
-      angle={45}
-      angleCenter={{ x: 0.5, y: 0.3 }}
-      style={{ flex: 1, width: '100%' }}
-    >
+    <OnboardingGradient>
       {/* Holder */}
       <View
         style={{
@@ -54,9 +48,7 @@ export const GetStartedScreen = () => {
         <Text style={styles.title}>
           Welcome to <Text style={{ fontFamily: fonts.Rubik600SemiBold }}>PlantApp</Text>
         </Text>
-        <Text style={styles.subTitle}>
-          Identify more than 3000+ plants and {'\n'} 88% accuracy.
-        </Text>
+        <Text style={styles.subTitle}>Identify more than 3000+ plants and {'\n'}88% accuracy.</Text>
 
         <FastImage
           style={{
@@ -72,8 +64,8 @@ export const GetStartedScreen = () => {
         <Pressable
           style={styles.getStartedButton}
           onPress={() => {
-            Logger.get('AScreen').info('Going to B');
-            navigation.navigate('B');
+            Logger.get('GetStartedScreen').info('Going to OnboardingCarousel');
+            navigation.navigate(ScreenNames.Onboarding.OnboardingCarousel);
           }}
         >
           <Text style={styles.getStartedButtonText}>Get Started</Text>
@@ -92,7 +84,7 @@ export const GetStartedScreen = () => {
           .
         </Text>
       </View>
-    </LinearGradient>
+    </OnboardingGradient>
   );
 };
 

@@ -1,8 +1,14 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
+//
 import { GetStartedScreen } from '@screens/Onboarding/GetStarted';
-import { BScreen } from './BScreen';
+import { OnboardingCarouselScreen } from '@/screens/Onboarding/Carousel';
+
+import { BScreen } from './screens/BScreen';
+
+//
 import { WebViewScreen, WebViewScreenParamList } from '@screens/WebViewScreen';
 
 //
@@ -10,6 +16,7 @@ import { WebViewScreen, WebViewScreenParamList } from '@screens/WebViewScreen';
 export const ScreenNames = {
   Onboarding: {
     GetStarted: 'Onboarding.GetStarted',
+    OnboardingCarousel: 'Onboarding.OnboardingCarousel',
   },
   Other: {
     WebView: 'Other.WebView',
@@ -19,26 +26,29 @@ export const ScreenNames = {
 
 export type RootStackParamList = {
   [ScreenNames.Onboarding.GetStarted]: undefined;
+  [ScreenNames.Onboarding.OnboardingCarousel]: undefined;
   [ScreenNames.Other.WebView]: WebViewScreenParamList;
   B: undefined;
 };
 
 //
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 const RootStack = () => {
   return (
     <Stack.Navigator initialRouteName="Onboarding.GetStarted">
-      <Stack.Screen
-        name={ScreenNames.Onboarding.GetStarted}
-        component={GetStartedScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name={ScreenNames.B} component={BScreen} />
-      <Stack.Screen
-        name={ScreenNames.Other.WebView}
-        component={WebViewScreen}
-        options={{ headerShown: false, presentation: 'modal' }}
-      />
+      <Stack.Group screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={ScreenNames.Onboarding.GetStarted} component={GetStartedScreen} />
+        <Stack.Screen
+          name={ScreenNames.Onboarding.OnboardingCarousel}
+          component={OnboardingCarouselScreen}
+        />
+        <Stack.Screen name={ScreenNames.B} component={BScreen} />
+        <Stack.Screen
+          name={ScreenNames.Other.WebView}
+          component={WebViewScreen}
+          options={{ presentation: 'modal' }}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

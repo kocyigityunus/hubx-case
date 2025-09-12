@@ -15,6 +15,7 @@ module.exports = api => {
       '@utils': './js/utils',
       '@styles': './js/styles',
       '@screens': './js/screens',
+      '@components': './js/components',
       '@assets': './assets',
     },
   };

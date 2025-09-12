@@ -9,7 +9,8 @@
       "@utils/*": ["./js/utils/*"],
       "@styles/*": ["./js/styles/*"],
       "@styles": ["./js/styles"],
-      "@screens/*": ["./js/screens/*"]
+      "@screens/*": ["./js/screens/*"],
+      "@components/*": ["./js/components/*"]
     }
   }
 }
