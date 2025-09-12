@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, Pressable, StyleSheet, Linking } from 'react-native';
+import { Text, View, Pressable, StyleSheet } from 'react-native';
 import { Logger } from '@utils/logger';
-import { fonts } from '@styles/fonts';
+import { fonts, colors } from '@styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from '@d11/react-native-fast-image';
@@ -29,7 +29,7 @@ export const GetStartedScreen = () => {
       >
         <Text
           style={{
-            color: '#13231B',
+            color: colors.dark900,
             fontFamily: fonts.Rubik400Regular,
             fontSize: 28,
             lineHeight: 28,
@@ -50,7 +50,7 @@ export const GetStartedScreen = () => {
             fontSize: 16,
             lineHeight: 24,
             letterSpacing: 0.07,
-            color: '#13231B',
+            color: colors.dark900,
             opacity: 0.7,
           }}
         >
@@ -68,7 +68,7 @@ export const GetStartedScreen = () => {
 
         <Pressable
           style={{
-            backgroundColor: '#28AF6E',
+            backgroundColor: colors.green400,
             borderRadius: 12,
             height: 56,
             justifyContent: 'center',
@@ -83,7 +83,7 @@ export const GetStartedScreen = () => {
         >
           <Text
             style={{
-              color: '#fff',
+              color: colors.white,
               fontFamily: 'SF Pro Text',
               fontWeight: 'bold',
               fontSize: 15,
@@ -103,7 +103,7 @@ export const GetStartedScreen = () => {
             fontSize: 11,
             lineHeight: 15,
             letterSpacing: 0.07,
-            color: '#597165',
+            color: colors.dark500,
             opacity: 0.7,
             marginTop: 24,
             marginHorizontal: 32,
