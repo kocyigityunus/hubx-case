@@ -15,6 +15,7 @@ module.exports = api => {
       '@utils': './js/utils',
       '@styles': './js/styles',
       '@screens': './js/screens',
+      '@assets': './assets',
     },
   };
   plugins.push(['module-resolver', moduleResolverOptions]);
