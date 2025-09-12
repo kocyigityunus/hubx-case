@@ -5,11 +5,12 @@ import { fonts } from '@styles/fonts';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from '@d11/react-native-fast-image';
+import { ScreenNames } from '@screens/navigation';
 
-export const AScreen = () => {
+export const GetStartedScreen = () => {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
-  Logger.get('AScreen').info({ insets });
+  Logger.get('GetStartedScreen').info({ insets });
 
   return (
     <LinearGradient
@@ -112,7 +113,7 @@ export const AScreen = () => {
           <Text
             style={styles.bottomInfoTextLink}
             onPress={async () => {
-              navigation.navigate('Other.WebView', {
+              navigation.navigate(ScreenNames.Other.WebView, {
                 url: 'https://novaapp.ai/terms',
               });
             }}
@@ -123,7 +124,7 @@ export const AScreen = () => {
           <Text
             style={styles.bottomInfoTextLink}
             onPress={() =>
-              navigation.navigate('Other.WebView', {
+              navigation.navigate(ScreenNames.Other.WebView, {
                 url: 'https://novaapp.ai/privacy',
               })
             }
