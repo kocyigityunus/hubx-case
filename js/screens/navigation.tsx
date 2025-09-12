@@ -1,9 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 
 import { GetStartedScreen } from '@screens/Onboarding/GetStarted';
 import { BScreen } from './BScreen';
-import { WebViewScreen } from '@screens/WebViewScreen';
+import { WebViewScreen, WebViewScreenParamList } from '@screens/WebViewScreen';
 
 //
 export const ScreenNames = {
@@ -15,19 +18,25 @@ export const ScreenNames = {
   },
 };
 
+export type RootStackParamList = {
+  'Onboarding.GetStarted': undefined;
+  'Other.WebView': WebViewScreenParamList;
+  B: undefined;
+};
+
 //
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const RootStack = () => {
   return (
     <Stack.Navigator initialRouteName="Onboarding.GetStarted">
       <Stack.Screen
-        name={ScreenNames.Onboarding.GetStarted}
+        name={'Onboarding.GetStarted'}
         component={GetStartedScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen name="B" component={BScreen} />
       <Stack.Screen
-        name={ScreenNames.Other.WebView}
+        name={'Other.WebView'}
         component={WebViewScreen}
         options={{ headerShown: false, presentation: 'modal' }}
       />

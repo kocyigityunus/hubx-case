@@ -1,14 +1,18 @@
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { Text, View, Pressable, StyleSheet } from 'react-native';
 import { Logger } from '@utils/logger';
 import { fonts, colors } from '@styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from '@d11/react-native-fast-image';
-import { ScreenNames } from '@screens/navigation';
+import { RootStackParamList, ScreenNames } from '@screens/navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export const GetStartedScreen = () => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<
+      NativeStackNavigationProp<RootStackParamList, 'Onboarding.GetStarted'>
+    >();
   const insets = useSafeAreaInsets();
   Logger.get('GetStartedScreen').info({ insets });
 
@@ -113,7 +117,7 @@ export const GetStartedScreen = () => {
           <Text
             style={styles.bottomInfoTextLink}
             onPress={async () => {
-              navigation.navigate(ScreenNames.Other.WebView, {
+              navigation.navigate('Other.WebView', {
                 url: 'https://novaapp.ai/terms',
               });
             }}
@@ -124,7 +128,7 @@ export const GetStartedScreen = () => {
           <Text
             style={styles.bottomInfoTextLink}
             onPress={() =>
-              navigation.navigate(ScreenNames.Other.WebView, {
+              navigation.navigate('Other.WebView', {
                 url: 'https://novaapp.ai/privacy',
               })
             }
