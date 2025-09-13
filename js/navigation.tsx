@@ -39,9 +39,9 @@ export type RootStackParamList = {
 
 //
 const Stack = createStackNavigator<RootStackParamList>();
-const RootStack = () => {
+const RootStack = ({ initialRouteName }: { initialRouteName: keyof RootStackParamList }) => {
   return (
-    <Stack.Navigator initialRouteName="Onboarding.GetStarted">
+    <Stack.Navigator initialRouteName={initialRouteName}>
       <Stack.Group screenOptions={{ headerShown: false }}>
         <Stack.Screen name={ScreenNames.Onboarding.GetStarted} component={GetStartedScreen} />
         <Stack.Screen
@@ -69,10 +69,14 @@ const RootStack = () => {
   );
 };
 
-export const Navigation = () => {
+export const Navigation = ({
+  initialRouteName,
+}: {
+  initialRouteName: keyof RootStackParamList;
+}) => {
   return (
     <NavigationContainer>
-      <RootStack />
+      <RootStack initialRouteName={initialRouteName} />
     </NavigationContainer>
   );
 };

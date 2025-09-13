@@ -5,38 +5,12 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { Button, StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { configureStore, createAction, createReducer, createSlice } from '@reduxjs/toolkit';
 import { Provider, useSelector } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Navigation } from './js/navigation';
-
-//
-
-const value = AsyncStorage.getItem('my-key')
-  .then(value => {
-    console.log({ value });
-  })
-  .catch(error => {
-    console.log({ error });
-  });
-
-const appStateSlice = createSlice({
-  name: 'appState',
-  initialState: { isOnboardingCompleted: false },
-  reducers: {
-    markOnboardingAsCompleted: (state, action) => {
-      console.log({ from: 'markOnboardingAsCompleted' });
-      state.isOnboardingCompleted = true;
-    },
-  },
-});
-
-const store = configureStore({
-  reducer: appStateSlice.reducer,
-});
+import { Navigation, ScreenNames } from './js/navigation';
+import { store, persistor, RootState } from '@/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 console.log({ from: 'App.tsx' });
 console.log({ store });
@@ -49,43 +23,28 @@ function App() {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <AppContent />
+        <PersistGate loading={null} persistor={persistor}>
+          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+          <AppContent />
+        </PersistGate>
       </Provider>
     </SafeAreaProvider>
   );
 }
 
 function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-  const abc = useSelector((state: RootState) => state);
-  console.log({ abc });
+  const isOnboardingCompleted = useSelector((state: RootState) => state.isOnboardingCompleted);
+  console.log({ isOnboardingCompleted });
 
   return (
-    <View style={styles.container}>
-      <Navigation />
-      {/* <Text style={{ paddingTop: 30 }}>
-        {JSON.stringify(store.getState(), null, 2)}
-      </Text>
-      <Button
-        title="Increment"
-        onPress={() => {
-          store.dispatch(appStateSlice.actions.markOnboardingAsCompleted());
-          console.log({ from: 'line 69' });
-        }}
+    <View style={{ flex: 1 }}>
+      <Navigation
+        initialRouteName={
+          isOnboardingCompleted ? ScreenNames.Main.Home : ScreenNames.Onboarding.GetStarted
+        }
       />
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      /> */}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;

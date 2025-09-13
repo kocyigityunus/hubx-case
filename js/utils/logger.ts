@@ -1,6 +1,9 @@
 type Level = 'NOTSET' | 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL';
 type Message = string | number | boolean | object | null | undefined;
 
+// TODO: use groupCollapsed
+// https://github.com/LogRocket/redux-logger/blob/master/src/core.js
+
 export class Logger {
   //
   private _name: string = 'main';

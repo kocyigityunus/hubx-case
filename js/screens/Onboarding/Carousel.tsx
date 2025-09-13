@@ -1,6 +1,6 @@
 import { Logger } from '@/utils/logger';
 import { CommonActions, useNavigation } from '@react-navigation/native';
-import { Image, Animated, Text, View, LayoutAnimation, StatusBar } from 'react-native';
+import { Image, Text, View, LayoutAnimation, StatusBar } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RootStackParamList, ScreenNames } from '../../navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -14,6 +14,8 @@ import FastImage from '@d11/react-native-fast-image';
 import React from 'react';
 import { EventNames, useMitt } from '@/utils/event';
 import { sleep } from '@/utils';
+import { useDispatch } from 'react-redux';
+import { appStateSlice } from '@/store';
 
 const Title0 = () => {
   return (
@@ -51,6 +53,7 @@ type NavType = NativeStackNavigationProp<RootStackParamList, ScreenName>;
 export const OnboardingCarouselScreen = () => {
   const navigation = useNavigation<NavType>();
   const insets = useSafeAreaInsets();
+  const dispatch = useDispatch();
   Logger.get('OnboardingCarouselScreen').info('line21.insets', { insets });
 
   //
@@ -64,7 +67,10 @@ export const OnboardingCarouselScreen = () => {
       //
       await sleep(500);
 
-      //
+      // mark onboarding as completed
+      dispatch(appStateSlice.actions.markOnboardingAsCompleted());
+
+      // reset to home screen
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
