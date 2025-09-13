@@ -9,7 +9,8 @@ import { OnboardingCarouselScreen } from '@/screens/Onboarding/Carousel';
 import { BScreen } from './screens/BScreen';
 
 //
-import { WebViewScreen, WebViewScreenParamList } from '@screens/WebViewScreen';
+import { WebViewScreen, WebViewScreenParamList } from '@/screens/Other/WebViewScreen';
+import { PaywallScreen } from '@screens/Other/PaywallScreen';
 
 //
 // export type ScreenNames = 'Onboarding.GetStarted' | 'Other.WebView' | 'B';
@@ -20,6 +21,7 @@ export const ScreenNames = {
   },
   Other: {
     WebView: 'Other.WebView',
+    Paywall: 'Other.Paywall',
   },
   B: 'B',
 } as const;
@@ -28,6 +30,7 @@ export type RootStackParamList = {
   [ScreenNames.Onboarding.GetStarted]: undefined;
   [ScreenNames.Onboarding.OnboardingCarousel]: undefined;
   [ScreenNames.Other.WebView]: WebViewScreenParamList;
+  [ScreenNames.Other.Paywall]: undefined;
   B: undefined;
 };
 
@@ -46,6 +49,11 @@ const RootStack = () => {
         <Stack.Screen
           name={ScreenNames.Other.WebView}
           component={WebViewScreen}
+          options={{ presentation: 'modal' }}
+        />
+        <Stack.Screen
+          name={ScreenNames.Other.Paywall}
+          component={PaywallScreen}
           options={{ presentation: 'modal' }}
         />
       </Stack.Group>

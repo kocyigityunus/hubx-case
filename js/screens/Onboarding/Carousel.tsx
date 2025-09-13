@@ -1,6 +1,6 @@
 import { Logger } from '@/utils/logger';
 import { useNavigation } from '@react-navigation/native';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Animated, Text, View, LayoutAnimation } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RootStackParamList, ScreenNames } from '../../navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -12,6 +12,35 @@ import { PrimaryButton } from '@components/base/PrimaryButton';
 import { PageIndicator } from 'react-native-page-indicator';
 import FastImage from '@d11/react-native-fast-image';
 import React from 'react';
+
+const Title0 = () => {
+  return (
+    <View style={{ minHeight: 70 }}>
+      <Text style={styles.title}>
+        Take a photo to <Text style={styles.titleHighlight}>identify</Text>
+        {'\n'} the plant!
+      </Text>
+      <Image
+        style={{ position: 'absolute', right: 47, top: 38, width: 136, height: 13 }}
+        source={require('@assets/images/brush.png')}
+      />
+    </View>
+  );
+};
+
+const Title1 = () => {
+  return (
+    <View style={{ minHeight: 70 }}>
+      <Text style={styles.title}>
+        Get plant <Text style={styles.titleHighlight}>care guides</Text>
+      </Text>
+      <Image
+        style={{ position: 'absolute', right: 100, top: 41, width: 152, height: 13 }}
+        source={require('@assets/images/brush.png')}
+      />
+    </View>
+  );
+};
 
 //
 type ScreenName = typeof ScreenNames.Onboarding.OnboardingCarousel;
@@ -29,15 +58,10 @@ export const OnboardingCarouselScreen = () => {
   return (
     <OnboardingGradient>
       <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
-        <View>
-          <Text style={styles.title}>
-            Take a photo to <Text style={styles.titleHighlight}>identify</Text>
-            {'\n'} the plant!
-          </Text>
-          <Image
-            style={{ position: 'absolute', right: 47, top: 47, width: 136, height: 13 }}
-            source={require('@assets/images/brush.png')}
-          />
+        <View style={{ marginTop: 12 }}>
+          {currentPage === 0 && <Title0 />}
+          {currentPage === 1 && <Title1 />}
+          {currentPage === 2 && <Title0 />}
         </View>
 
         {/* Pager View and Bottom Part Holder */}
@@ -45,7 +69,10 @@ export const OnboardingCarouselScreen = () => {
           <PagerView
             style={styles.pagerView}
             initialPage={0}
-            onPageSelected={e => setCurrentPage(e.nativeEvent.position)}
+            onPageSelected={e => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+              setCurrentPage(e.nativeEvent.position);
+            }}
           >
             <View style={[styles.page, {}]} key="0">
               <FastImage
@@ -74,8 +101,8 @@ export const OnboardingCarouselScreen = () => {
               style={{ marginHorizontal: 24 }}
               title="Continue"
               onPress={() => {
-                Logger.get('GetStartedScreen').info('Going to OnboardingCarousel');
-                navigation.push(ScreenNames.Onboarding.OnboardingCarousel);
+                Logger.get('GetStartedScreen').info('Going to Paywall');
+                navigation.push(ScreenNames.Other.Paywall);
               }}
             />
 
@@ -105,7 +132,6 @@ const styles = StyleSheet.create({
     letterSpacing: -1,
     marginHorizontal: 24,
     color: colors.dark900,
-    marginTop: 12,
   },
   titleHighlight: {
     fontFamily: fonts.Rubik800ExtraBold,
