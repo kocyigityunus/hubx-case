@@ -8,9 +8,10 @@ import { OnboardingGradient } from '@components/other/OnboardingGradient';
 import PagerView from 'react-native-pager-view';
 import { StyleSheet } from 'react-native-unistyles';
 import { colors, fonts } from '@styles';
-import { useLayout } from '@react-native-community/hooks';
-import { useLayoutEffect, useRef } from 'react';
 import { PrimaryButton } from '@components/base/PrimaryButton';
+import { PageIndicator } from 'react-native-page-indicator';
+import FastImage from '@d11/react-native-fast-image';
+import React from 'react';
 
 //
 type ScreenName = typeof ScreenNames.Onboarding.OnboardingCarousel;
@@ -21,6 +22,10 @@ export const OnboardingCarouselScreen = () => {
   const insets = useSafeAreaInsets();
   Logger.get('OnboardingCarouselScreen').info('line21.insets', { insets });
 
+  //
+  const [currentPage, setCurrentPage] = React.useState(0);
+
+  //
   return (
     <OnboardingGradient>
       <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
@@ -35,23 +40,55 @@ export const OnboardingCarouselScreen = () => {
           />
         </View>
 
-        <PagerView style={styles.pagerView} initialPage={0}>
-          <View style={[styles.page, { backgroundColor: 'red' }]} key="1">
-            <Text>First page</Text>
-          </View>
-          <View style={[styles.page, { backgroundColor: 'blue' }]} key="2">
-            <Text>Second page</Text>
-          </View>
-        </PagerView>
+        {/* Pager View and Bottom Part Holder */}
+        <View style={{ flex: 1 }}>
+          <PagerView
+            style={styles.pagerView}
+            initialPage={0}
+            onPageSelected={e => setCurrentPage(e.nativeEvent.position)}
+          >
+            <View style={[styles.page, {}]} key="0">
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@assets/images/onboarding_carousel0.png')}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            </View>
+            <View style={[styles.page, {}]} key="1">
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@assets/images/onboarding_carousel1.png')}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            </View>
+            <View style={[styles.page, {}]} key="2">
+              <FastImage
+                style={{ width: '100%', height: '100%' }}
+                source={require('@assets/images/onboarding_carousel0.png')}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            </View>
+          </PagerView>
+          <View style={{ position: 'absolute', bottom: 12, left: 0, right: 0, height: 100 }}>
+            <PrimaryButton
+              style={{ marginHorizontal: 24 }}
+              title="Continue"
+              onPress={() => {
+                Logger.get('GetStartedScreen').info('Going to OnboardingCarousel');
+                navigation.push(ScreenNames.Onboarding.OnboardingCarousel);
+              }}
+            />
 
-        <PrimaryButton
-          style={{ marginHorizontal: 24, marginTop: 12 }}
-          title="Continue"
-          onPress={() => {
-            Logger.get('GetStartedScreen').info('Going to OnboardingCarousel');
-            navigation.push(ScreenNames.Onboarding.OnboardingCarousel);
-          }}
-        />
+            <PageIndicator
+              count={3}
+              current={currentPage}
+              style={{ marginTop: 32 }}
+              variant="beads"
+              color="#13231B40"
+              activeColor={colors.dark900}
+            />
+          </View>
+        </View>
       </View>
     </OnboardingGradient>
   );
@@ -75,11 +112,9 @@ const styles = StyleSheet.create({
   },
   pagerView: {
     flex: 1,
-    backgroundColor: 'blue',
   },
   page: {
     flex: 1,
-    backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
   },
