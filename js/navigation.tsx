@@ -5,12 +5,11 @@ import { NavigationContainer } from '@react-navigation/native';
 //
 import { GetStartedScreen } from '@screens/Onboarding/GetStarted';
 import { OnboardingCarouselScreen } from '@/screens/Onboarding/Carousel';
-
 import { BScreen } from './screens/BScreen';
-
-//
 import { WebViewScreen, WebViewScreenParamList } from '@/screens/Other/WebViewScreen';
 import { PaywallScreen } from '@screens/Other/PaywallScreen';
+import { HomeScreen } from './screens/Main/HomeScreen';
+import { Logger } from './utils/logger';
 
 //
 // export type ScreenNames = 'Onboarding.GetStarted' | 'Other.WebView' | 'B';
@@ -18,6 +17,9 @@ export const ScreenNames = {
   Onboarding: {
     GetStarted: 'Onboarding.GetStarted',
     OnboardingCarousel: 'Onboarding.OnboardingCarousel',
+  },
+  Main: {
+    Home: 'Main.Home',
   },
   Other: {
     WebView: 'Other.WebView',
@@ -31,6 +33,7 @@ export type RootStackParamList = {
   [ScreenNames.Onboarding.OnboardingCarousel]: undefined;
   [ScreenNames.Other.WebView]: WebViewScreenParamList;
   [ScreenNames.Other.Paywall]: undefined;
+  [ScreenNames.Main.Home]: undefined;
   B: undefined;
 };
 
@@ -54,8 +57,13 @@ const RootStack = () => {
         <Stack.Screen
           name={ScreenNames.Other.Paywall}
           component={PaywallScreen}
-          options={{ presentation: 'transparentModal', gestureEnabled: false }}
+          options={{
+            presentation: 'transparentModal',
+            gestureEnabled: false,
+            animation: 'slide_from_bottom',
+          }}
         />
+        <Stack.Screen name={ScreenNames.Main.Home} component={HomeScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

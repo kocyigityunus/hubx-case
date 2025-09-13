@@ -42,7 +42,15 @@ export const Pack = ({ isSelected, title, subTitle, promoText, onSelect }: PackP
   return (
     <BlurView
       blurAmount={80}
-      style={[{ height: 60, width: '100%', overflow: 'hidden', borderRadius: 14 }]}
+      style={[
+        {
+          height: 60,
+          width: '100%',
+          overflow: 'hidden',
+          borderRadius: 14,
+          backgroundColor: '#FFFFFF15',
+        },
+      ]}
     >
       <Pressable
         onPress={onSelect}

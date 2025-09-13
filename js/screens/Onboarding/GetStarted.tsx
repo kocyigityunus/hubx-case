@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, Pressable } from 'react-native';
+import { Text, View, Pressable, StatusBar } from 'react-native';
 import { Logger } from '@utils/logger';
 import { fonts, colors } from '@styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -36,6 +36,7 @@ export const GetStartedScreen = () => {
 
   return (
     <OnboardingGradient>
+      <StatusBar barStyle={'dark-content'} />
       {/* Holder */}
       <View
         style={{

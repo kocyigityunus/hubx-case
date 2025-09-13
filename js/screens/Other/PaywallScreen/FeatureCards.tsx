@@ -7,7 +7,7 @@ type FeatureCardProps = { title: string; description: string; iconElement: React
 export const FeatureCard = ({ title, description, iconElement }: FeatureCardProps) => {
   return (
     <BlurView
-      style={{ width: 156, height: 130, borderRadius: 14, backgroundColor: '#FFFFFF14' }}
+      style={{ width: 156, height: 130, borderRadius: 14, backgroundColor: '#FFFFFF35' }}
       blurType="dark"
       blurAmount={16}
     >
@@ -17,10 +17,9 @@ export const FeatureCard = ({ title, description, iconElement }: FeatureCardProp
             width: 36,
             height: 36,
             borderRadius: 8,
-            flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#0000003D',
+            backgroundColor: '#00000055',
           }}
         >
           {iconElement}

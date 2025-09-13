@@ -1,6 +1,6 @@
 import { Logger } from '@/utils/logger';
-import { useNavigation } from '@react-navigation/native';
-import { Image, Animated, Text, View, LayoutAnimation } from 'react-native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { Image, Animated, Text, View, LayoutAnimation, StatusBar } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RootStackParamList, ScreenNames } from '../../navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -12,6 +12,8 @@ import { PrimaryButton } from '@components/base/PrimaryButton';
 import { PageIndicator } from 'react-native-page-indicator';
 import FastImage from '@d11/react-native-fast-image';
 import React from 'react';
+import { EventNames, useMitt } from '@/utils/event';
+import { sleep } from '@/utils';
 
 const Title0 = () => {
   return (
@@ -55,8 +57,28 @@ export const OnboardingCarouselScreen = () => {
   const [currentPage, setCurrentPage] = React.useState(0);
 
   //
+  useMitt(
+    EventNames.PaywallClosed,
+    async data => {
+      console.log('PaywallClosed thrown', data);
+      //
+      await sleep(500);
+
+      //
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: ScreenNames.Main.Home }],
+        }),
+      );
+    },
+    [navigation],
+  );
+
+  //
   return (
     <OnboardingGradient>
+      <StatusBar barStyle={'dark-content'} />
       <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
         <View style={{ marginTop: 12 }}>
           {currentPage === 0 && <Title0 />}

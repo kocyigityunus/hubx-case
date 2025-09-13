@@ -1,8 +1,7 @@
 import { colors, fonts } from '@/styles';
 import { Logger } from '@/utils/logger';
-import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Pressable, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
@@ -12,6 +11,8 @@ import { Pack } from './Pack';
 import { PrimaryButton } from '@/components/base/PrimaryButton';
 import { RootStackParamList, ScreenNames } from '@/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import FastImage from '@d11/react-native-fast-image';
+import { emit, EventNames } from '@/utils/event';
 
 //
 const scannerSvg = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_594_6466)"><path d="M4.5 16.4531H2.25C2.06354 16.453 1.88474 16.3789 1.75289 16.2471C1.62104 16.1152 1.54694 15.9364 1.54688 15.75V13.5C1.54525 13.3892 1.50009 13.2834 1.42115 13.2056C1.34221 13.1278 1.23582 13.0842 1.12499 13.0842C1.01416 13.0842 0.907776 13.1278 0.828837 13.2056C0.749898 13.2834 0.704741 13.3892 0.703125 13.5V15.75C0.703848 16.16 0.867054 16.553 1.15699 16.843C1.44693 17.1329 1.83997 17.2961 2.25 17.2969H4.5C4.61085 17.2953 4.71664 17.2501 4.79448 17.1712C4.87231 17.0923 4.91595 16.9858 4.91595 16.875C4.91595 16.7641 4.87231 16.6577 4.79448 16.5788C4.71664 16.4998 4.61085 16.4547 4.5 16.4531V16.4531Z" fill="white"/><path d="M16.8747 13.0781C16.8193 13.0781 16.7644 13.0889 16.7132 13.1101C16.662 13.1313 16.6155 13.1623 16.5763 13.2015C16.5371 13.2407 16.506 13.2873 16.4848 13.3385C16.4637 13.3897 16.4528 13.4446 16.4529 13.5V15.75C16.4528 15.9365 16.3787 16.1153 16.2468 16.2471C16.115 16.379 15.9362 16.4531 15.7497 16.4531H13.4997C13.3889 16.4548 13.2832 16.4999 13.2054 16.5789C13.1276 16.6578 13.084 16.7642 13.084 16.875C13.084 16.9858 13.1276 17.0922 13.2054 17.1712C13.2832 17.2501 13.3889 17.2953 13.4998 17.2969H15.7497C16.1598 17.2962 16.5528 17.133 16.8427 16.843C17.1327 16.5531 17.2959 16.16 17.2966 15.75V13.5C17.2967 13.4446 17.2858 13.3897 17.2647 13.3385C17.2435 13.2873 17.2124 13.2407 17.1732 13.2015C17.134 13.1623 17.0875 13.1313 17.0363 13.1101C16.9851 13.0889 16.9302 13.0781 16.8747 13.0781V13.0781Z" fill="white"/><path d="M1.125 4.92188C1.18042 4.92196 1.23531 4.91109 1.28653 4.88992C1.33775 4.86874 1.38429 4.83767 1.42348 4.79848C1.46267 4.75929 1.49374 4.71276 1.51491 4.66154C1.53609 4.61032 1.54695 4.55543 1.54687 4.50001V2.25C1.54694 2.06354 1.62104 1.88474 1.75289 1.75289C1.88474 1.62105 2.06354 1.54694 2.25 1.54688H4.5C4.61082 1.54526 4.71655 1.50009 4.79435 1.42115C4.87214 1.34221 4.91575 1.23582 4.91574 1.12499C4.91574 1.01416 4.87213 0.907777 4.79433 0.828837C4.71653 0.749898 4.6108 0.704741 4.49998 0.703125H2.25C1.83996 0.703845 1.44693 0.86705 1.15699 1.15699C0.86705 1.44693 0.703845 1.83997 0.703125 2.25V4.50001C0.703051 4.55543 0.713913 4.61032 0.735088 4.66154C0.756263 4.71276 0.787335 4.75929 0.826524 4.79848C0.865714 4.83767 0.91225 4.86874 0.963468 4.88992C1.01469 4.91109 1.06958 4.92196 1.125 4.92188Z" fill="white"/><path d="M15.75 0.703125H13.5C13.3881 0.703125 13.2808 0.747572 13.2017 0.826689C13.1226 0.905806 13.0781 1.01311 13.0781 1.125C13.0781 1.23689 13.1226 1.34419 13.2017 1.42331C13.2808 1.50243 13.3881 1.54687 13.5 1.54688H15.75C15.9365 1.54694 16.1153 1.62104 16.2471 1.75289C16.379 1.88474 16.4531 2.06354 16.4531 2.25V4.5C16.4547 4.61082 16.4999 4.71655 16.5789 4.79435C16.6578 4.87214 16.7642 4.91575 16.875 4.91575C16.9858 4.91575 17.0922 4.87213 17.1712 4.79433C17.2501 4.71654 17.2953 4.6108 17.2969 4.49998V2.25C17.2962 1.83996 17.133 1.44693 16.843 1.15699C16.5531 0.86705 16.16 0.703845 15.75 0.703125V0.703125Z" fill="white"/><path d="M4.07812 5.625V7.73438H13.9219V5.625C13.9212 5.21496 13.758 4.82193 13.468 4.53199C13.1781 4.24205 12.785 4.07884 12.375 4.07812H5.625C5.21496 4.07884 4.82193 4.24205 4.53199 4.53199C4.24205 4.82193 4.07884 5.21496 4.07812 5.625Z" fill="white"/><path d="M13.9216 12.375V9.42188H15.7497C15.8616 9.42188 15.9689 9.37743 16.048 9.29831C16.1272 9.21919 16.1716 9.11189 16.1716 9C16.1716 8.88811 16.1272 8.78081 16.048 8.70169C15.9689 8.62257 15.8616 8.57812 15.7497 8.57812H2.24973C2.13891 8.57975 2.03318 8.62491 1.95538 8.70385C1.87759 8.78279 1.83398 8.88918 1.83398 9.00001C1.83399 9.11084 1.8776 9.21723 1.9554 9.29616C2.0332 9.3751 2.13893 9.42026 2.24975 9.42188H4.07786V12.375C4.07858 12.785 4.24178 13.1781 4.53172 13.468C4.82166 13.7579 5.2147 13.9212 5.62473 13.9219H12.3747C12.7848 13.9212 13.1778 13.7579 13.4677 13.468C13.7577 13.1781 13.9209 12.785 13.9216 12.375V12.375Z" fill="white" fill-opacity="0.7"/></g><defs><clipPath id="clip0_594_6466"><rect width="18" height="18" fill="white"/></clipPath></defs></svg>`;
@@ -30,7 +31,12 @@ export const PaywallScreen = ({ route }: { route: any }) => {
   //
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<NavType>();
-  const url = route?.params?.url ?? 'https://novaapp.ai/';
+
+  //
+  const closeScreen = useCallback(() => {
+    emit(EventNames.PaywallClosed);
+    navigation.goBack();
+  }, [navigation]);
 
   //
   const [selectedPack, setSelectedPack] = React.useState<'1month' | '1year'>('1year');
@@ -38,8 +44,21 @@ export const PaywallScreen = ({ route }: { route: any }) => {
   return (
     <View style={{ flex: 1, backgroundColor: '#101E17' }}>
       <StatusBar barStyle={'light-content'} />
+
+      <FastImage
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          aspectRatio: 375 / 490,
+        }}
+        source={require('@assets/images/paywall_bg.png')}
+        resizeMode={FastImage.resizeMode.contain}
+      />
+
       <ScrollView style={{ flex: 1, paddingTop: 120, paddingHorizontal: 24 }}>
-        <View style={{ height: 185, backgroundColor: colors.green400 }} />
+        <View style={{ height: 185 }} />
 
         <View style={{ flex: 1, flexDirection: 'row', gap: 6, alignItems: 'center' }}>
           <SvgXml xml={logoSvg} width={133} height={47} />
@@ -50,7 +69,7 @@ export const PaywallScreen = ({ route }: { route: any }) => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{ marginTop: 24, overflow: 'visible' }}
+          style={{ marginTop: 20, overflow: 'visible' }}
           contentContainerStyle={{ gap: 12 }}
         >
           <FeatureCard
@@ -103,7 +122,7 @@ export const PaywallScreen = ({ route }: { route: any }) => {
           backgroundColor: '#101E17',
         }}
       >
-        <PrimaryButton title="Try free for 3 days" style={{ height: 52 }} onPress={() => {}}>
+        <PrimaryButton title="Try free for 3 days" style={{ height: 52 }} onPress={closeScreen}>
           <Text
             style={{
               fontFamily: fonts.Rubik500Medium,
@@ -158,10 +177,7 @@ export const PaywallScreen = ({ route }: { route: any }) => {
 
       <Pressable
         style={{ position: 'absolute', top: 64, right: 24 }}
-        onPress={() => {
-          Logger.get('PaywallScreen').info('Closing Paywall');
-          navigation.goBack();
-        }}
+        onPress={closeScreen}
         hitSlop={12}
       >
         <SvgXml xml={closeSvg} width={24} height={24} />
