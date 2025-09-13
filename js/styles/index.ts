@@ -1,4 +1,5 @@
 export const fonts = {
+  Rubik300Light: 'Rubik-Light',
   Rubik400Regular: 'Rubik-Regular',
   Rubik500Medium: 'Rubik-Medium',
   Rubik600SemiBold: 'Rubik-SemiBold',
@@ -19,4 +20,5 @@ export const colors = {
 
   //
   white: '#fff',
+  black: '#000',
 };

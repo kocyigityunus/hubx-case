@@ -54,7 +54,7 @@ const RootStack = () => {
         <Stack.Screen
           name={ScreenNames.Other.Paywall}
           component={PaywallScreen}
-          options={{ presentation: 'modal' }}
+          options={{ presentation: 'transparentModal', gestureEnabled: false }}
         />
       </Stack.Group>
     </Stack.Navigator>

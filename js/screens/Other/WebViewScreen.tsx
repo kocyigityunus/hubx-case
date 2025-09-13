@@ -1,3 +1,4 @@
+import { colors } from '@/styles';
 import { Logger } from '@/utils/logger';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
@@ -20,8 +21,8 @@ export const WebViewScreen = ({ route }: { route: any }) => {
   const url = route?.params?.url ?? 'https://novaapp.ai/';
 
   return (
-    <View style={{ flex: 1 }}>
-      <WebView style={{ flex: 1 }} source={{ uri: url }} />
+    <View style={{ flex: 1, backgroundColor: colors.black }}>
+      <WebView style={{ flex: 1, backgroundColor: colors.black }} source={{ uri: url }} />
       <Pressable
         style={{ position: 'absolute', top: 24, right: 24 }}
         onPress={() => navigation.goBack()}
