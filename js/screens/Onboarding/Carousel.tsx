@@ -74,7 +74,7 @@ export const OnboardingCarouselScreen = () => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: ScreenNames.Main.Home }],
+          routes: [{ name: ScreenNames.Other.Main }],
         }),
       );
     },
