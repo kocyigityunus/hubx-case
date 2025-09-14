@@ -12,6 +12,10 @@ import { MainNavigation, ScreenNames } from './js/navigation';
 import { store, persistor, RootState } from '@/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
+//
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const queryClient = new QueryClient();
+
 console.log({ from: 'App.tsx' });
 console.log({ store });
 
@@ -24,8 +28,10 @@ function App() {
     <SafeAreaProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <AppContent />
+          <QueryClientProvider client={queryClient}>
+            <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+            <AppContent />
+          </QueryClientProvider>
         </PersistGate>
       </Provider>
     </SafeAreaProvider>

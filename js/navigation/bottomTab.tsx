@@ -10,6 +10,7 @@ import { colors, fonts } from '@/styles';
 import { PlatformPressable } from '@react-navigation/elements';
 import { colord } from 'colord';
 import { StyleSheet } from 'react-native-unistyles';
+import { HomeScreen } from '@/screens/Main/HomeScreen';
 
 // icons
 const homeSvg = `<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.50008 3.04199H18.5078C18.4413 2.22906 17.9482 1.78564 17.0376 1.78564H7.96073C7.05968 1.78564 6.55698 2.22906 6.50008 3.04199ZM4.5652 5.71172H20.4426C20.3098 4.83413 19.8545 4.33529 18.8492 4.33529H6.15863C5.15325 4.33529 4.69798 4.83413 4.5652 5.71172ZM5.68439 22.3214H19.314C21.2868 22.3214 22.3206 21.3237 22.3206 19.4207V10.1182C22.3206 8.21518 21.2868 7.21749 19.314 7.21749H5.68439C3.70208 7.21749 2.67773 8.20594 2.67773 10.1182V19.4207C2.67773 21.3237 3.70208 22.3214 5.68439 22.3214Z" fill="currentColor"/></svg>`;
@@ -178,7 +179,7 @@ const BoottomTabNavigator = () => {
     >
       <Tab.Screen
         name={ScreenNames.Main.Home}
-        component={BScreen}
+        component={HomeScreen}
         options={{ tabBarLabel: 'Home' }}
       />
       <Tab.Screen
