@@ -23,7 +23,6 @@ import { colors, fonts } from '@styles';
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import FastImage from '@d11/react-native-fast-image';
-import { BlurView } from '@react-native-community/blur';
 import { SvgXml } from 'react-native-svg';
 import { getCategories, getQuestions } from '@/api';
 import { colord } from 'colord';
@@ -187,30 +186,29 @@ const Question = ({ question }: { question: Question }) => {
           navigation.push(ScreenNames.Other.WebView, { url: question.uri });
         }}
       >
-        <BlurView style={{ height: 64, pointerEvents: 'none' }}>
-          <View
+        <View
+          style={{
+            paddingStart: 12,
+            paddingEnd: 4,
+            paddingTop: 11,
+            height: 64,
+            pointerEvents: 'none',
+          }}
+        >
+          <Text
+            numberOfLines={2}
             style={{
-              paddingStart: 12,
-              paddingEnd: 4,
-              paddingTop: 11,
+              fontFamily: fonts.Rubik400Regular,
+              fontSize: 15,
+              lineHeight: 20,
+              letterSpacing: -0.24,
+              color: colors.white,
               pointerEvents: 'none',
             }}
           >
-            <Text
-              numberOfLines={2}
-              style={{
-                fontFamily: fonts.Rubik400Regular,
-                fontSize: 15,
-                lineHeight: 20,
-                letterSpacing: -0.24,
-                color: colors.white,
-                pointerEvents: 'none',
-              }}
-            >
-              {question.title}
-            </Text>
-          </View>
-        </BlurView>
+            {question.title}
+          </Text>
+        </View>
       </Pressable>
     </FastImage>
   );
