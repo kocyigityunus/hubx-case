@@ -312,7 +312,6 @@ const ListHeaderComponent = () => {
 //
 type ScreenName = typeof ScreenNames.Main.Home;
 type NavType = NativeStackNavigationProp<RootStackParamList, ScreenName>;
-
 export const HomeScreen = () => {
   const navigation = useNavigation<NavType>();
   const insets = useSafeAreaInsets();
@@ -327,14 +326,13 @@ export const HomeScreen = () => {
     queryFn: getCategories,
     select: data => data.data,
   });
+  console.log({ categoriesData, isLoading, error });
 
   //
   const { width } = useWindowDimensions();
   const categoryWidth = React.useMemo(() => {
     return (width - 2 * 24 - 11) / 2;
   }, [width]);
-
-  console.log({ categoriesData, isLoading, error });
 
   //
   return (

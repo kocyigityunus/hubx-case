@@ -5,7 +5,7 @@
  * @format
  */
 
-import { StatusBar, useColorScheme, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider, useSelector } from 'react-redux';
 import { MainNavigation, ScreenNames } from './js/navigation';
@@ -20,16 +20,13 @@ console.log({ from: 'App.tsx' });
 console.log({ store });
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-  console.log({ from: 'AppContent' });
-  console.log({ store });
-
+  //
   return (
     <SafeAreaProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <QueryClientProvider client={queryClient}>
-            <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+            <StatusBar barStyle={'dark-content'} />
             <AppContent />
           </QueryClientProvider>
         </PersistGate>

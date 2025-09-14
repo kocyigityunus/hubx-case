@@ -4,13 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 //
 import { GetStartedScreen } from '@screens/Onboarding/GetStarted';
 import { OnboardingCarouselScreen } from '@/screens/Onboarding/Carousel';
-import { BScreen } from '../screens/BScreen';
+import { TempScreen, TempScreenParamList } from '../screens/TempScreen';
 import { WebViewScreen, WebViewScreenParamList } from '@/screens/Other/WebViewScreen';
 import { PaywallScreen } from '@screens/Other/PaywallScreen';
 import { BoottomTabNavigator } from './bottomTab';
 
 //
-// export type ScreenNames = 'Onboarding.GetStarted' | 'Other.WebView' | 'B';
 export const ScreenNames = {
   Onboarding: {
     GetStarted: 'Onboarding.GetStarted',
@@ -28,7 +27,9 @@ export const ScreenNames = {
     Paywall: 'Other.Paywall',
     Main: 'Other.Main',
   },
-  B: 'B',
+
+  //
+  Temp: 'Temp',
 } as const;
 
 export type RootStackParamList = {
@@ -44,7 +45,7 @@ export type RootStackParamList = {
   [ScreenNames.Main.Profile]: undefined;
 
   //
-  B: undefined;
+  Temp: TempScreenParamList;
 };
 
 //
@@ -58,7 +59,7 @@ const RootStack = ({ initialRouteName }: { initialRouteName: keyof RootStackPara
           name={ScreenNames.Onboarding.OnboardingCarousel}
           component={OnboardingCarouselScreen}
         />
-        <Stack.Screen name={ScreenNames.B} component={BScreen} />
+        <Stack.Screen name={ScreenNames.Temp} component={TempScreen} />
         <Stack.Screen
           name={ScreenNames.Other.WebView}
           component={WebViewScreen}

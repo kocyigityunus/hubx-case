@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //
-import { BScreen } from '../screens/BScreen';
-import { Pressable, Text, View } from 'react-native';
+import { TempScreen } from '../screens/TempScreen';
+import { Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenNames } from './';
 import { SvgXml } from 'react-native-svg';
@@ -184,23 +184,27 @@ const BoottomTabNavigator = () => {
       />
       <Tab.Screen
         name={ScreenNames.Main.Diagnose}
-        component={BScreen}
+        component={TempScreen}
         options={{ tabBarLabel: 'Diagnose' }}
+        initialParams={{ text: 'Diagnose' }}
       />
       <Tab.Screen
         name={ScreenNames.Main.Identify}
-        component={BScreen}
+        component={TempScreen}
         options={{ tabBarLabel: 'Identify' }}
+        initialParams={{ text: 'Identify' }}
       />
       <Tab.Screen
         name={ScreenNames.Main.MyGarden}
-        component={BScreen}
+        component={TempScreen}
         options={{ tabBarLabel: 'My Garden' }}
+        initialParams={{ text: 'My Garden' }}
       />
       <Tab.Screen
         name={ScreenNames.Main.Profile}
-        component={BScreen}
+        component={TempScreen}
         options={{ tabBarLabel: 'Profile' }}
+        initialParams={{ text: 'Profile' }}
       />
     </Tab.Navigator>
   );
