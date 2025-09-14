@@ -73,7 +73,7 @@ const HeaderView = () => {
         </Text>
 
         <TouchableHighlight
-          underlayColor={colors.white}
+          underlayColor={colord(colors.white).alpha(0.3).toHex()}
           style={{
             borderWidth: 0.2,
             borderColor: colord('#3C3C43').alpha(0.25).toHex(),
