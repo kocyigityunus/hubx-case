@@ -1,15 +1,13 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 //
 import { GetStartedScreen } from '@screens/Onboarding/GetStarted';
 import { OnboardingCarouselScreen } from '@/screens/Onboarding/Carousel';
-import { BScreen } from './screens/BScreen';
+import { BScreen } from '../screens/BScreen';
 import { WebViewScreen, WebViewScreenParamList } from '@/screens/Other/WebViewScreen';
 import { PaywallScreen } from '@screens/Other/PaywallScreen';
-import { HomeScreen } from './screens/Main/HomeScreen';
-import { Logger } from './utils/logger';
+import { BoottomTabNavigator } from './bottomTab';
 
 //
 // export type ScreenNames = 'Onboarding.GetStarted' | 'Other.WebView' | 'B';
@@ -20,10 +18,15 @@ export const ScreenNames = {
   },
   Main: {
     Home: 'Main.Home',
+    Diagnose: 'Main.Diagnose',
+    Identify: 'Main.Identify',
+    MyGarden: 'Main.MyGarden',
+    Profile: 'Main.Profile',
   },
   Other: {
     WebView: 'Other.WebView',
     Paywall: 'Other.Paywall',
+    Main: 'Other.Main',
   },
   B: 'B',
 } as const;
@@ -33,7 +36,14 @@ export type RootStackParamList = {
   [ScreenNames.Onboarding.OnboardingCarousel]: undefined;
   [ScreenNames.Other.WebView]: WebViewScreenParamList;
   [ScreenNames.Other.Paywall]: undefined;
+  [ScreenNames.Other.Main]: undefined;
   [ScreenNames.Main.Home]: undefined;
+  [ScreenNames.Main.Diagnose]: undefined;
+  [ScreenNames.Main.Identify]: undefined;
+  [ScreenNames.Main.MyGarden]: undefined;
+  [ScreenNames.Main.Profile]: undefined;
+
+  //
   B: undefined;
 };
 
@@ -63,17 +73,15 @@ const RootStack = ({ initialRouteName }: { initialRouteName: keyof RootStackPara
             animation: 'slide_from_bottom',
           }}
         />
-        <Stack.Screen name={ScreenNames.Main.Home} component={HomeScreen} />
+        <Stack.Screen name={ScreenNames.Other.Main} component={BoottomTabNavigator} />
       </Stack.Group>
     </Stack.Navigator>
   );
 };
 
-export const Navigation = ({
-  initialRouteName,
-}: {
-  initialRouteName: keyof RootStackParamList;
-}) => {
+//
+type MainNavigationProps = { initialRouteName: keyof RootStackParamList };
+export const MainNavigation = ({ initialRouteName }: MainNavigationProps) => {
   return (
     <NavigationContainer>
       <RootStack initialRouteName={initialRouteName} />

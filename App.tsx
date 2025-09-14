@@ -5,10 +5,10 @@
  * @format
  */
 
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StatusBar, useColorScheme, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider, useSelector } from 'react-redux';
-import { Navigation, ScreenNames } from './js/navigation';
+import { MainNavigation, ScreenNames } from './js/navigation';
 import { store, persistor, RootState } from '@/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -38,9 +38,9 @@ function AppContent() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Navigation
+      <MainNavigation
         initialRouteName={
-          isOnboardingCompleted ? ScreenNames.Main.Home : ScreenNames.Onboarding.GetStarted
+          isOnboardingCompleted ? ScreenNames.Other.Main : ScreenNames.Onboarding.GetStarted
         }
       />
     </View>

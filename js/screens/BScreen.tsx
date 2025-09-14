@@ -6,13 +6,11 @@ export const BScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    // navigation.setOptions({
+    //   title: 'B Screen 12123',
+    // });
     navigation.setOptions({
-      title: 'B Screen 12123',
-    });
-    navigation.setOptions({
-      headerRight: () => (
-        <Button title="Go to A" onPress={() => navigation.navigate('A')} />
-      ),
+      headerRight: () => <Button title="Go to A" onPress={() => navigation.navigate('A')} />,
     });
   }, [navigation]);
 
